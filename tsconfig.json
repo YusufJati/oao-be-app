@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "target": "es6",                 // Targeting ECMAScript 2015 (ES6)
+      "module": "commonjs",            // CommonJS modules
+      "sourceMap": true,               // Generate source maps
+      "outDir": "dist",                // Output directory for compiled files
+      "strict": true,                  // Enable strict type-checking options
+      "lib": ["esnext"],               // Specify library files to be included
+      "esModuleInterop": true,         // Enable interoperability between CommonJS and ES Modules
+      "moduleResolution": "node",      // Use Node.js module resolution strategy
+      "rootDir": "src",                // Specify the root directory of input files
+      "skipLibCheck": true,            // Skip type checking of declaration files
+      "resolveJsonModule": true        // Include modules imported with .json extension
+    },
+    "include": ["src/**/*"],           // Include all files in the src directory
+    "exclude": ["node_modules", "dist"] // Exclude node_modules and dist directories
+  }
+  
