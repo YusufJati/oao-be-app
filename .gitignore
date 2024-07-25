@@ -6,3 +6,4 @@ prisma/schema.prisma
 
 # hide middleware
 middleware
+.vercel
