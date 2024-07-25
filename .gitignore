@@ -2,8 +2,6 @@ node_modules
 # Keep environment variables out of version control
 .env
 # hide prisma schema.prisma
-prisma/schema.prisma
+#prisma/schema.prisma
 
-# hide middleware
-middleware
 .vercel

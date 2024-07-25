@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Broker {
+  id             Int      @id @default(autoincrement())
+  kode           String?  @db.VarChar(255)
+  nama           String?  @db.VarChar(255)
+  alamat         String?  @db.VarChar(255)
+  nomor_telepon  String?  @db.VarChar(255)
+  contact_person String?  @db.VarChar(255)
+  created_at     DateTime?
+  CustomerTransaction CustomerTransaction[]
+}
+
+model Customer {
+  id                 Int      @id @default(autoincrement())
+  nik                String?  @db.VarChar(255)
+  nama               String?  @db.VarChar(255)
+  tempat_lahir       String?  @db.VarChar(255)
+  tanggal_lahir      DateTime?
+  jenis_kelamin      String?  @db.VarChar(255)
+  golongan_darah     String?  @db.VarChar(255)
+  kode_negara        String?  @db.VarChar(255)
+  status_pernikahan  Boolean?
+  jenis_identitas    String?  @db.VarChar(255)
+  alamat             String?  @db.VarChar(255)
+  rt_rw              String?  @db.VarChar(255)
+  kelurahan          String?  @db.VarChar(255)
+  kecamatan          String?  @db.VarChar(255)
+  agama              String?  @db.VarChar(255)
+  pekerjaan          String?  @db.VarChar(255)
+  kewarganegaraan    String?  @db.VarChar(255)
+  tanggal_berlaku    DateTime?
+  provinsi           String?  @db.VarChar(255)
+  foto               Bytes?
+  tanda_tangan       Bytes?
+  tanggal_input      DateTime?
+  email              String?  @db.VarChar(255)
+  CustomerTransaction CustomerTransaction[]
+}
+
+model CustomerTransaction {
+  id          Int      @id @default(autoincrement())
+  customer_id Int?
+  broker_id   Int?
+  created_at  DateTime?
+  updated_at  DateTime?
+  created_by  String?  @db.VarChar(255)
+  updated_by  String?  @db.VarChar(255)
+  email       String?  @db.VarChar(255)
+  kode_otp    String?  @db.VarChar(255)
+  customer    Customer? @relation(fields: [customer_id], references: [id])
+  broker      Broker?   @relation(fields: [broker_id], references: [id])
+  OpeningAccount OpeningAccount?
+
+  @@unique([broker_id, customer_id], name: "index_customer_broker")
+}
+
+model OpeningAccount {
+  id                          Int     @id @default(autoincrement())
+  efek_saham                  String? @db.VarChar(255)
+  efek_utang                  String? @db.VarChar(255)
+  efek_reksa_dana             String? @db.VarChar(255)
+  pendidikan_terakhir         String? @db.VarChar(255)
+  nama_ibu_kandung            String? @db.VarChar(255)
+  nama_perusahaan             String? @db.VarChar(255)
+  alamat_perusahaan           String? @db.VarChar(255)
+  kode_pos                    Int?
+  nomor_perusahaan            Int?
+  jenis_pekerjaan             String? @db.VarChar(255)
+  email_perusahaan            String? @db.VarChar(255)
+  jabatan                     String? @db.VarChar(255)
+  bidang_usaha                String? @db.VarChar(255)
+  lama_bekerja                String? @db.VarChar(255)
+  penghasilan_pertahun        String? @db.VarChar(255)
+  penghasilan_tambahan_pertahun String? @db.VarChar(255)
+  sumber_penghasilan_utama    String? @db.VarChar(255)
+  sumber_penghasilan_tambahan String? @db.VarChar(255)
+  sumber_pendanaan_transaksi  String? @db.VarChar(255)
+  tujuan_investasi            String? @db.VarChar(255)
+  tanda_tangan                Bytes?
+  customerTransaction         CustomerTransaction @relation(fields: [id], references: [id])
+
+  @@index([id], name: "fk_customer_transaction")
+}
+
+
