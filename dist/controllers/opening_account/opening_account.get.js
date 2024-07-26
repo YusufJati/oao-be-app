@@ -33,7 +33,7 @@ const getOneOpeningAccount = (req, res) => __awaiter(void 0, void 0, void 0, fun
         res.status(500).json({
             meta: {
                 code: 500,
-                message: 'Internal Server Error',
+                message: 'Error fetching opening account',
             },
             error: error || 'An unexpected error occurred',
         });
@@ -56,7 +56,7 @@ const getAllOpeningAccounts = (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.status(500).json({
             meta: {
                 code: 500,
-                message: 'Internal Server Error',
+                message: 'Error fetching opening accounts',
             },
             error: error || 'An unexpected error occurred',
         });

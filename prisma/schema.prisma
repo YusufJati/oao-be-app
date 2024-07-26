@@ -32,9 +32,9 @@ model Customer {
   tanggal_lahir      DateTime?
   jenis_kelamin      String?  @db.VarChar(255)
   golongan_darah     String?  @db.VarChar(255)
-  kode_negara        String?  @db.VarChar(255)
-  status_pernikahan  Boolean?
-  jenis_identitas    String?  @db.VarChar(255)
+  //kode_negara        String?  @db.VarChar(255)
+  status_pernikahan        String?  @db.VarChar(255)
+  //jenis_identitas    String?  @db.VarChar(255)
   alamat             String?  @db.VarChar(255)
   rt_rw              String?  @db.VarChar(255)
   kelurahan          String?  @db.VarChar(255)

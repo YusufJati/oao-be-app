@@ -23,7 +23,7 @@ export interface Customer {
   jenis_kelamin?: string;
   golongan_darah?: string;
   kode_negara?: string;
-  status_pernikahan?: boolean;
+  status_pernikahan?: string;
   jenis_identitas?: string;
   alamat?: string;
   rt_rw?: string;
@@ -38,6 +38,7 @@ export interface Customer {
   tanda_tangan?: Buffer;
   tanggal_input?: Date;
   email?: string;
+  id_broker?: number;
   CustomerTransaction?: CustomerTransaction[];
 }
 
@@ -60,6 +61,7 @@ export interface CustomerTransaction {
 // Interface for OpeningAccount
 export interface OpeningAccount {
   id: number;
+  customerTransactionId?: number;  // This should be the ID of CustomerTransaction
   efek_saham?: string;
   efek_utang?: string;
   efek_reksa_dana?: string;

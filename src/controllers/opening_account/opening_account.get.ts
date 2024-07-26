@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { OpeningAccount } from '../../interfaces/InterfaceDb';
+import * as middlewares from '../../middlewares';
 
 const prisma = new PrismaClient();
 
@@ -25,7 +26,7 @@ export const getOneOpeningAccount = async (req: Request, res: Response) => {
         res.status(500).json({
             meta: {
                 code: 500,
-                message: 'Internal Server Error',
+                message: 'Error fetching opening account',
             },
             error: error || 'An unexpected error occurred',
         });
@@ -47,7 +48,7 @@ export const getAllOpeningAccounts = async (req: Request, res: Response) => {
         res.status(500).json({
             meta: {
                 code: 500,
-                message: 'Internal Server Error',
+                message: 'Error fetching opening accounts',
             },
             error: error || 'An unexpected error occurred',
         });

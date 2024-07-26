@@ -10,11 +10,13 @@ import { stat } from 'fs';
 import brokerRoutes from './routes/broker.routes';
 import customerRoutes from './routes/customer.routes';
 import openingAccountRoutes from './routes/opening_account.routes';
+import path from 'path';
 
 
 require('dotenv').config();
 
 const app = express();
+
 
 app.use(morgan('dev'));
 app.use(helmet());

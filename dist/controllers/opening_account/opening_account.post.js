@@ -15,8 +15,10 @@ const prisma = new client_1.PrismaClient();
 const createOpeningAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
     try {
+        // get customer id from customer transaction
         const openingAccount = yield prisma.openingAccount.create({
             data: {
+                customerTransaction: { connect: { id: data.customerTransactionId } },
                 alamat_perusahaan: data.alamat_perusahaan,
             },
         });
@@ -33,7 +35,7 @@ const createOpeningAccount = (req, res) => __awaiter(void 0, void 0, void 0, fun
         res.status(500).json({
             meta: {
                 code: 500,
-                message: 'Internal Server Error',
+                message: 'Error creating opening account',
             },
             error: error || 'An unexpected error occurred',
         });

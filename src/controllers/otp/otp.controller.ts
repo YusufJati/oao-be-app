@@ -2,6 +2,8 @@
 // import otpGenerator from 'otp-generator';
 // import nodemailer from 'nodemailer';
 // import { OTP } from '../../models/otp.model';
+// import * as middlewares from '../../middlewares';
+
 
 // export const generateOTP = async (req, res) => {
 //     const { email } = req.body;

@@ -2,14 +2,18 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { OpeningAccount } from '../../interfaces/InterfaceDb';
+import * as middlewares from '../../middlewares';
+
 
 const prisma = new PrismaClient();
 
 export const createOpeningAccount = async (req: Request, res: Response) => {
     const data : OpeningAccount = req.body;
     try {
+        // get customer id from customer transaction
         const openingAccount = await prisma.openingAccount.create({
             data: {
+                customerTransaction: { connect: { id: data.customerTransactionId } },
                 alamat_perusahaan: data.alamat_perusahaan,
             },
         });
@@ -25,7 +29,7 @@ export const createOpeningAccount = async (req: Request, res: Response) => {
         res.status(500).json({
             meta: {
                 code: 500,
-                message: 'Internal Server Error',
+                message: 'Error creating opening account',
             },
             error: error || 'An unexpected error occurred',
         });
