@@ -13,3 +13,5 @@ Dockerfile
 
 # hide db folder
 db
+
+dist
