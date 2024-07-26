@@ -10,7 +10,6 @@ import { stat } from 'fs';
 import brokerRoutes from './routes/broker.routes';
 import customerRoutes from './routes/customer.routes';
 import openingAccountRoutes from './routes/opening_account.routes';
-import { getAllBrokers, getOneBrokerByCode, getOneBroker } from './controllers/broker/broker.get';
 
 
 require('dotenv').config();
@@ -50,8 +49,6 @@ app.get('/hello', (req, res) => {
 app.get('/about', (req, res) => {
     res.status(200).send('About page');
 });
-
-app.get('/cobadb', getAllBrokers);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);

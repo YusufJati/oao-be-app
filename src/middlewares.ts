@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 
 import ErrorResponse from './interfaces/ErrorResponse';
+import { PrismaClient } from '@prisma/client';
+
+const client = new PrismaClient();
 
 export function notFound(req: Request, res: Response, next: NextFunction) {
   res.status(404);
@@ -29,3 +32,5 @@ export const authenticateAPIKey = (req: Request, res: Response, next: NextFuncti
       });
     }
   };
+
+
