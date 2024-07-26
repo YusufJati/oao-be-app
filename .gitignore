@@ -5,3 +5,8 @@ node_modules
 #prisma/schema.prisma
 
 .vercel
+
+# hide all docker files
+docker-compose.yml
+Dockerfile
+.dockerignore
