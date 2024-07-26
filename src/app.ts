@@ -20,6 +20,9 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+// middleware api key
+app.use(middlewares.authenticateAPIKey);
+
 // Routes
 app.use(brokerRoutes);
 app.use(customerRoutes);
@@ -48,6 +51,5 @@ app.get('/about', (req, res) => {
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
-app.use(middlewares.authenticateAPIKey);
 
 export default app;
