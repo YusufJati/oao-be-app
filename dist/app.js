@@ -34,12 +34,15 @@ const middlewares = __importStar(require("./middlewares"));
 const broker_routes_1 = __importDefault(require("./routes/broker.routes"));
 const customer_routes_1 = __importDefault(require("./routes/customer.routes"));
 const opening_account_routes_1 = __importDefault(require("./routes/opening_account.routes"));
+const broker_get_1 = require("./controllers/broker/broker.get");
 require('dotenv').config();
 const app = (0, express_1.default)();
 app.use((0, morgan_1.default)('dev'));
 app.use((0, helmet_1.default)());
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
+// middleware api key
+app.use(middlewares.authenticateAPIKey);
 // Routes
 app.use(broker_routes_1.default);
 app.use(customer_routes_1.default);
@@ -61,8 +64,8 @@ app.get('/hello', (req, res) => {
 app.get('/about', (req, res) => {
     res.status(200).send('About page');
 });
+app.get('/cobadb', broker_get_1.getAllBrokers);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
-app.use(middlewares.authenticateAPIKey);
 exports.default = app;
 //# sourceMappingURL=app.js.map
