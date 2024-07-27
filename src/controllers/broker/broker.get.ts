@@ -67,7 +67,7 @@ export const getOneBrokerByCode = async (req: Request, res: Response) => {
   try {
     const broker = await prisma.broker.findMany({
       where: {
-        kode: code.toString(),
+        kode: {contains: code.toLowerCase(), mode: 'insensitive'},
       },
     });
 

@@ -47,7 +47,7 @@ model Customer {
   foto               Bytes?
   tanda_tangan       Bytes?
   tanggal_input      DateTime?
-  email              String?  @db.VarChar(255)
+  email              String?  @db.VarChar(255) 
   CustomerTransaction CustomerTransaction[]
 }
 
