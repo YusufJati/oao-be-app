@@ -69,8 +69,8 @@ export interface OpeningAccount {
   nama_ibu_kandung?: string;
   nama_perusahaan?: string;
   alamat_perusahaan?: string;
-  kode_pos?: number;
-  nomor_perusahaan?: number;
+  kode_pos?: string;
+  nomor_perusahaan?: string;
   jenis_pekerjaan?: string;
   email_perusahaan?: string;
   jabatan?: string;

@@ -77,8 +77,8 @@ model OpeningAccount {
   nama_ibu_kandung            String? @db.VarChar(255)
   nama_perusahaan             String? @db.VarChar(255)
   alamat_perusahaan           String? @db.VarChar(255)
-  kode_pos                    Int?
-  nomor_perusahaan            Int?
+  kode_pos                    String? @db.VarChar(255)
+  nomor_perusahaan            String? @db.VarChar(255)
   jenis_pekerjaan             String? @db.VarChar(255)
   email_perusahaan            String? @db.VarChar(255)
   jabatan                     String? @db.VarChar(255)
