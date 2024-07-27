@@ -42,8 +42,7 @@ export const createCustomer = async (req: Request, res: Response) => {
             const customerTransaction = await prisma.customerTransaction.create({
                 data: {
                     customer_id: customer.id,
-                    broker_id: data.id_broker,
-                },
+                    broker_id: data.id_broker,                },
             });
 
             return { customer, customerTransaction };

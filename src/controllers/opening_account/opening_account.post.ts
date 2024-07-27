@@ -34,7 +34,6 @@ export const createOpeningAccount = async (req: Request, res: Response) => {
                 sumber_pendanaan_transaksi: data.sumber_pendanaan_transaksi,
                 tujuan_investasi: data.tujuan_investasi,
                 tanda_tangan: data.tanda_tangan ? Buffer.from(data.tanda_tangan.toString('base64'), 'base64') : undefined,
-                customerTransaction: { connect: { id: data.customerTransactionId } },
             },
         });
         res.status(201).json({
