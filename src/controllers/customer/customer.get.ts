@@ -171,6 +171,7 @@ export const getOneCustomerByName = async (req: Request, res: Response) => {
             where: {
                 nama: {
                     contains: nama,
+                    mode: 'insensitive',
                 },
             },
             include: {
