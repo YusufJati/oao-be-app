@@ -55,7 +55,7 @@ model CustomerTransaction {
   id          Int      @id @default(autoincrement())
   customer_id Int?
   broker_id   Int?
-  created_at  DateTime?
+  created_at  DateTime? 
   updated_at  DateTime?
   created_by  String?  @db.VarChar(255)
   updated_by  String?  @db.VarChar(255)

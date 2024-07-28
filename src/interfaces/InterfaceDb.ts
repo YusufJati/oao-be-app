@@ -86,3 +86,18 @@ export interface OpeningAccount {
   customerTransaction?: CustomerTransaction;
 }
 
+export interface GenerateOTPRequestt{
+  body: {
+    customer_id: number;
+    broker_id: number;
+    email: string;
+  };
+}
+
+export interface ValidateOTPRequest {
+  body: {
+    email: string;
+    otp: string;
+  };
+}
+

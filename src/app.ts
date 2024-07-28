@@ -10,6 +10,7 @@ import { stat } from 'fs';
 import brokerRoutes from './routes/broker.routes';
 import customerRoutes from './routes/customer.routes';
 import openingAccountRoutes from './routes/opening_account.routes';
+import otpRoutes from './routes/otp.routes';
 import path from 'path';
 
 
@@ -30,6 +31,7 @@ app.use(middlewares.authenticateAPIKey);
 app.use(brokerRoutes);
 app.use(customerRoutes);
 app.use(openingAccountRoutes);
+app.use(otpRoutes);
 
 app.get<{}, MessageResponse>('/', (req, res) => {
   res.json({
