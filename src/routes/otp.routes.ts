@@ -50,14 +50,16 @@ router.post('/generate-otp', async (req, res) => {
   
       res.status(201).json({
         meta: {
+            code: 201,
             status: 'success',
             message: 'OTP has been sent to your email.',
         },
+        otp: otpCode,
         customerTransactionId: customerTransaction.id,
       });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ status: 'error', message: 'Failed to send OTP' });
+      res.status(500).json({code: 500, status: 'error', message: 'Failed to send OTP' });
     }
   });
 
@@ -79,10 +81,19 @@ router.post('/validate-otp', async (req, res) => {
       data: { kode_otp: null }
     });
 
-    res.status(200).json({ message: 'OTP validated successfully', customerTransactionId: customerTransaction.id });
+    res.status(200).json({
+      code: 200, 
+      status: 'success',
+      message: 'OTP validated successfully', 
+      customerTransactionId: customerTransaction.id 
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to validate OTP' });
+    res.status(500).json({
+      code: 500, 
+      status: 'error',
+      error: 'Failed to validate OTP' 
+    });
   }
 });
 
