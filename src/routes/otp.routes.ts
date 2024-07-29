@@ -88,13 +88,23 @@ router.post('/validate-otp', async (req, res) => {
       data: { kode_otp: null }
     });
 
+    // get customer data
+    // const customer = await prisma.customer.findUnique({
+    //   where: { id: customerTransaction.customer_id }
+    // });
+
     //const token = jwt.sign({ customerTransactionId: customerTransaction.id }, SECRET_KEY, { expiresIn: '10m' });
 
     res.status(200).json({
-      code: 200, 
-      status: 'success',
-      message: 'OTP validated successfully', 
-      customerTransactionId: customerTransaction.id 
+      meta: {
+        code: 200, 
+        status: 'success',
+        message: 'OTP validated successfully', 
+      },
+      customerTransactionId: customerTransaction.id,
+      customerData: {
+
+      }
     });
   } catch (err) {
     console.error(err);

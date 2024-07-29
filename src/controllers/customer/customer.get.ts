@@ -387,3 +387,48 @@ export const getAllCustomers = async (req: Request, res: Response) => {
   }
 };
 
+export const getCustomerByCustomerTransactionId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const customer = await prisma.customer.findFirst({
+            where: {
+                CustomerTransaction: {
+                    some: {
+                        id: parseInt(id),
+                    },
+                },
+            },
+            include: {
+                CustomerTransaction: {
+                    select: {
+                        broker: {
+                            select: {
+                                id: true,
+                                nama: true,
+                                kode: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    
+        if (!customer) {
+            return res.status(404).json({
+                meta: {
+                    code: 404,
+                    message: 'Customer not found',
+                },
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching customer:', error);
+        res.status(500).json({
+            meta: {
+                code: 500,
+                message: 'Error fetching customer',
+            },
+            error: error || 'An unexpected error occurred',
+        });
+    }
+}
