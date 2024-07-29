@@ -45,6 +45,8 @@ export const createCustomer = async (req: Request, res: Response) => {
                     email: customer.email,
                     broker_id: data.id_broker,
                     kode_otp: otpCode,
+                    created_at: data.tanggal_input,
+                    updated_at: data.tanggal_input,
                 },
             });
 
