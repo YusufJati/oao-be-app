@@ -2,9 +2,16 @@ import { Router } from "express";
 import { generateOTP, sendOTPEmail } from '../controllers/otp/otp.controller';
 import { ValidateOTPRequest } from "../interfaces/InterfaceDb";
 import { PrismaClient } from '@prisma/client';
+import jwt from 'jsonwebtoken';
+
 
 const prisma = new PrismaClient();
 const router = Router();
+
+// Varibel untuk konfigurasi OTP
+const SECRET_KEY = 'your_secret_key';
+const OTP_VALIDITY_DURATION = 10 * 60 * 1000; // 10 minutes
+const MAX_ATTEMPTS = 3;
 
 // Route untuk mengirim OTP
 router.post('/generate-otp', async (req, res) => {
@@ -80,6 +87,8 @@ router.post('/validate-otp', async (req, res) => {
       where: { id: customerTransaction.id }, // Use the transaction ID to update the record
       data: { kode_otp: null }
     });
+
+    //const token = jwt.sign({ customerTransactionId: customerTransaction.id }, SECRET_KEY, { expiresIn: '10m' });
 
     res.status(200).json({
       code: 200, 

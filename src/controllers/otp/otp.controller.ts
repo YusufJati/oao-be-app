@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 export function generateOTP(length: number) {
-    return crypto.randomBytes(length).toString('hex').slice(0, length);
+  return crypto.randomBytes(length).toString('hex').slice(0, length).toUpperCase();
 }
 
 // Fungsi untuk mengirim email
