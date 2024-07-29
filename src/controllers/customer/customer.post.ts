@@ -2,16 +2,15 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { Customer } from '../../interfaces/InterfaceDb';
-import * as middlewares from '../../middlewares';
+import { generateAndSendOTP, generateOTP, sendOTPEmail } from '../otp/otp.controller'; // Pastikan jalur impor sesuai dengan lokasi fungsi
 
 const prisma = new PrismaClient();
 
 export const createCustomer = async (req: Request, res: Response) => {
-    // Mendapatkan data dari body request dan mengetikkan sebagai Customer
     const data: Customer = req.body;
-    const statusPernikahan = req.body.status_pernikahan; // Handle status_pernikahan separately
+    const statusPernikahan = req.body.status_pernikahan;
+
     try {
-        // Menggunakan transaksi Prisma untuk memastikan konsistensi data
         const result = await prisma.$transaction(async (prisma) => {
             // Membuat customer
             const customer = await prisma.customer.create({
@@ -38,14 +37,19 @@ export const createCustomer = async (req: Request, res: Response) => {
                 },
             });
 
-            // Membuat customer_transaction
+            // Membuat customer_transaction dan menghasilkan OTP
+            const otpCode = generateOTP(6);
             const customerTransaction = await prisma.customerTransaction.create({
                 data: {
                     customer_id: customer.id,
                     email: customer.email,
-                    broker_id: data.id_broker,                
+                    broker_id: data.id_broker,
+                    kode_otp: otpCode,
                 },
             });
+
+            // Mengirim OTP melalui email
+            await sendOTPEmail(data.email, otpCode);
 
             return { customer, customerTransaction };
         });

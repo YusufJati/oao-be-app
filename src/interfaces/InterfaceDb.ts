@@ -37,7 +37,7 @@ export interface Customer {
   foto?: Buffer;
   tanda_tangan?: Buffer;
   tanggal_input?: Date;
-  email?: string;
+  email: string;
   id_broker?: number;
   CustomerTransaction?: CustomerTransaction[];
 }

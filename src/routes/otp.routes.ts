@@ -72,11 +72,11 @@ router.post('/generate-otp', async (req, res) => {
 
 // Route untuk verifikasi OTP
 router.post('/validate-otp', async (req, res) => {
-  const { otp } = req.body;
+  const { email, otp } = req.body;
 
   try {
     const customerTransaction = await prisma.customerTransaction.findFirst({
-      where: { kode_otp: otp }
+      where: { email: email,kode_otp: otp }
     });
 
     if (!customerTransaction) {
