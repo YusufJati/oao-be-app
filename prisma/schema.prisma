@@ -53,7 +53,7 @@ model Customer {
 
 model CustomerTransaction {
   id          Int      @id @default(autoincrement())
-  customer_id Int?
+  customer_id Int
   broker_id   Int?
   created_at  DateTime? 
   updated_at  DateTime?

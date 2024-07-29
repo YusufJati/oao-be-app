@@ -76,44 +76,82 @@ router.post('/validate-otp', async (req, res) => {
 
   try {
     const customerTransaction = await prisma.customerTransaction.findFirst({
-      where: { email: email,kode_otp: otp }
+      where: { email: email, kode_otp: otp }
     });
 
     if (!customerTransaction) {
-      return res.status(400).json({ error: 'Invalid OTP' });
+      return res.status(400).json({
+        meta: {
+          code: 400,
+          status: 'error',
+          message: 'Invalid OTP'
+        }
+      });
     }
 
     await prisma.customerTransaction.update({
-      where: { id: customerTransaction.id }, // Use the transaction ID to update the record
+      where: { id: customerTransaction.id },
       data: { kode_otp: null }
     });
 
-    // get customer data
-    // const customer = await prisma.customer.findUnique({
-    //   where: { id: customerTransaction.customer_id }
-    // });
+    const customer = await prisma.customer.findUnique({
+      where: { id: customerTransaction.customer_id }
+    });
 
-    //const token = jwt.sign({ customerTransactionId: customerTransaction.id }, SECRET_KEY, { expiresIn: '10m' });
+    if (!customer) {
+      return res.status(404).json({
+        meta: {
+          code: 404,
+          status: 'error',
+          message: 'Customer not found'
+        }
+      });
+    }
 
     res.status(200).json({
       meta: {
-        code: 200, 
+        code: 200,
         status: 'success',
-        message: 'OTP validated successfully', 
+        message: 'OTP validated successfully'
       },
-      customerTransactionId: customerTransaction.id,
-      customerData: {
-
+      data: {
+        customerTransactionId: customerTransaction.id,
+        customerData: {
+          id: customer.id,
+          nik: customer.nik,
+          nama: customer.nama,
+          email: customer.email,
+          alamat: customer.alamat,
+          kelurahan: customer.kelurahan,
+          kecamatan: customer.kecamatan,
+          provinsi: customer.provinsi,
+          tanggal_lahir: customer.tanggal_lahir,
+          tempat_lahir: customer.tempat_lahir,
+          jenis_kelamin: customer.jenis_kelamin,
+          golongan_darah: customer.golongan_darah,
+          status_pernikahan: customer.status_pernikahan,
+          rt_rw: customer.rt_rw,
+          agama: customer.agama,
+          pekerjaan: customer.pekerjaan,
+          tanggal_berlaku: customer.tanggal_berlaku,
+          foto: customer.foto?.toString('base64'),
+          tanda_tangan: customer.tanda_tangan?.toString('base64'),
+          tanggal_input: customer.tanggal_input,
+        }
       }
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      code: 500, 
-      status: 'error',
-      error: 'Failed to validate OTP' 
+      meta: {
+        code: 500,
+        status: 'error',
+        message: 'Failed to validate OTP'
+      },
+      error: err || 'An unexpected error occurred'
     });
   }
 });
+
 
 export default router;

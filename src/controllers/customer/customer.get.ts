@@ -421,6 +421,14 @@ export const getCustomerByCustomerTransactionId = async (req: Request, res: Resp
                 },
             });
         }
+
+        res.status(200).json({
+            meta: {
+                code: 200,
+                message: 'Customer fetched successfully',
+            },
+            data: customer,
+        });
     } catch (error) {
         console.error('Error fetching customer:', error);
         res.status(500).json({
