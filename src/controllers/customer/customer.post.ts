@@ -29,6 +29,7 @@ export const createCustomer = async (req: Request, res: Response) => {
                     status_pernikahan: statusPernikahan,
                     rt_rw: data.rt_rw,
                     agama: data.agama,
+                    kewarganegaraan: data.kewarganegaraan,
                     pekerjaan: data.pekerjaan,
                     tanggal_berlaku: data.tanggal_berlaku,
                     foto: data.foto ? Buffer.from(data.foto.toString('base64'), 'base64') : undefined,
