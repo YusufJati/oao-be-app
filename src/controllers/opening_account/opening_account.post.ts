@@ -24,7 +24,8 @@ export const createOpeningAccount = async (req: Request, res: Response) => {
           },
         });
       }
-  
+      
+      const tandaTanganBuffer = data.tanda_tangan ? Buffer.from(data.tanda_tangan.toString('base64'), 'base64') : undefined;
       const openingAccount = await prisma.openingAccount.create({
         data: {
           customerTransaction: {
@@ -53,6 +54,10 @@ export const createOpeningAccount = async (req: Request, res: Response) => {
           tanda_tangan: data.tanda_tangan ? Buffer.from(data.tanda_tangan.toString('base64'), 'base64') : undefined,
         },
       });
+
+      const tandaTanganSize = tandaTanganBuffer ? tandaTanganBuffer.length : 0;
+      const sizeInKB = tandaTanganSize / 1024;
+      const sizeInMB = sizeInKB / 1024;
   
       res.status(201).json({
         meta: {
@@ -60,6 +65,8 @@ export const createOpeningAccount = async (req: Request, res: Response) => {
           message: 'Created',
         },
         data: openingAccount,
+        // get tanda_tangan size in bytes (kb or mb)
+        size: `Ukuran tanda tangan: ${tandaTanganSize} bytes (${sizeInKB} KB, ${sizeInMB} MB)`,
       });
     } catch (error) {
       console.error('Error creating opening account:', error);

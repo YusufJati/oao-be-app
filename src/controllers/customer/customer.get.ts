@@ -368,12 +368,26 @@ export const getAllCustomers = async (req: Request, res: Response) => {
           };
       });
 
+      // get foto and tanda_tangan size
+        const fotoBuffer = customers.map(customer => customer.foto ? Buffer.from(customer.foto.toString('base64'), 'base64') : undefined);
+        const tandaTanganBuffer = customers.map(customer => customer.tanda_tangan ? Buffer.from(customer.tanda_tangan.toString('base64'), 'base64') : undefined);
+        const fotoSize = fotoBuffer.map(buffer => buffer ? buffer.length : 0);
+        const tandaTanganSize = tandaTanganBuffer.map(buffer => buffer ? buffer.length : 0);
+        const fotoSizeInKB = fotoSize.map(size => size / 1024);
+        const tandaTanganSizeInKB = tandaTanganSize.map(size => size / 1024);
+        const fotoSizeInMB = fotoSizeInKB.map(size => size / 1024);
+        const tandaTanganSizeInMB = tandaTanganSizeInKB.map(size => size / 1024);
+
       res.status(200).json({
           meta: {
               code: 200,
               message: 'OK',
           },
           data: result,
+          size: {
+            Foto: `Ukuran foto: (${fotoSizeInKB} KB, ${fotoSizeInMB} MB)`,
+            Ttd: `Ukuran tanda tangan: (${tandaTanganSizeInKB} KB, ${tandaTanganSizeInMB} MB)`,
+          }
       });
   } catch (error) {
       console.error('Error fetching customers:', error);

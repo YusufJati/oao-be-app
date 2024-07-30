@@ -52,6 +52,7 @@ export const getAllBrokers = async (req: Request, res: Response) => {
         });
     }
 }
+
 export const getOneBrokerByCode = async (req: Request, res: Response) => {
   const { code } = req.params;
 

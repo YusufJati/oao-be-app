@@ -41,7 +41,7 @@ model Customer {
   kecamatan          String?  @db.VarChar(255)
   agama              String?  @db.VarChar(255)
   pekerjaan          String?  @db.VarChar(255)
-  kewarganegaraan    String?  @db.VarChar(255)
+  kewarganegaraan    String?  @db.VarChar(255) @default("WNI")
   tanggal_berlaku    DateTime?
   provinsi           String?  @db.VarChar(255)
   foto               Bytes?
@@ -55,8 +55,8 @@ model CustomerTransaction {
   id          Int      @id @default(autoincrement())
   customer_id Int
   broker_id   Int?
-  created_at  DateTime? 
-  updated_at  DateTime?
+  created_at  DateTime?  @default(now())
+  updated_at  DateTime? @updatedAt
   created_by  String?  @db.VarChar(255)
   updated_by  String?  @db.VarChar(255)
   email       String?  @db.VarChar(255)
