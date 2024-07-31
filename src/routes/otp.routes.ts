@@ -125,6 +125,7 @@ router.post('/validate-otp', async (req, res) => {
           kelurahan: customer.kelurahan,
           kecamatan: customer.kecamatan,
           provinsi: customer.provinsi,
+          kota: customer.kota,
           tanggal_lahir: customer.tanggal_lahir,
           tempat_lahir: customer.tempat_lahir,
           jenis_kelamin: customer.jenis_kelamin,
