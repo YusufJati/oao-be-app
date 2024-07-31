@@ -454,3 +454,58 @@ export const getCustomerByCustomerTransactionId = async (req: Request, res: Resp
         });
     }
 }
+
+// get photo data and convert it to image and base64 and display it
+// export const getPhoto = async (req: Request, res: Response): Promise<void> => {
+//     const { id } = req.params;
+//     try {
+//         const customer = await prisma.customer.findUnique({
+//             where: {
+//                 id: parseInt(id),
+//             },
+//         });
+
+//         if (!customer) {
+//             res.status(404).json({
+//                 meta: {
+//                     code: 404,
+//                     message: 'Customer not found',
+//                 },
+//             });
+//             return;
+//         }
+
+//         const base64Photo = customer.foto ? customer.foto.toString('base64') : null;
+//         console.log('base64Photo:', base64Photo);
+
+//         if (base64Photo) {
+//             res.status(200).json({
+//                 meta: {
+//                     code: 200,
+//                     message: 'OK',
+//                 },
+//                 data: {
+//                     base64Photo,
+//                     photo: `data:image/png;base64,${base64Photo}`,
+//                 },
+//             });
+//         } else {
+//             res.status(200).json({
+//                 meta: {
+//                     code: 200,
+//                     message: 'No photo available',
+//                 },
+//                 data: null,
+//             });
+//         }
+//     } catch (error) {
+//         console.error('Error fetching customer:', error);
+//         res.status(500).json({
+//             meta: {
+//                 code: 500,
+//                 message: 'Error fetching customer',
+//             },
+//             error: error instanceof Error ? error.message : 'An unexpected error occurred',
+//         });
+//     }
+// };

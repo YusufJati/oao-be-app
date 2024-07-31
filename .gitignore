@@ -15,3 +15,5 @@ Dockerfile
 db
 
 dist
+# hide prisma migration folder
+prisma/migrations

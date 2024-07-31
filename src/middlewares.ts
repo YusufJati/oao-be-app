@@ -33,4 +33,33 @@ export const authenticateAPIKey = (req: Request, res: Response, next: NextFuncti
     }
   };
 
+// export const loginAPI = async (req: Request, res: Response) => {
+//   const { username, password } = req.body;
+
+//   try {
+//     const user = await client.user.findFirst({
+//       where: {
+//         username: username,
+//         password: password
+//       }
+//     });
+
+//     if (!user) {
+//       return res.status(401).json({
+//         message: "Invalid username or password."
+//       });
+//     }
+
+//     res.status(200).json({
+//       message: "Login success.",
+//       data: user
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({
+//       message: "Failed to login."
+//     });
+//   }
+// }
+
 
