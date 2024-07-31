@@ -45,6 +45,7 @@ model Customer {
   kewarganegaraan    String?  @db.VarChar(255) @default("WNI")
   tanggal_berlaku    DateTime?
   provinsi           String?  @db.VarChar(255)
+  kota               String?  @db.VarChar(255)
   foto               Bytes?
   tanda_tangan       Bytes?
   tanggal_input      DateTime?

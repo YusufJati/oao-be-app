@@ -11,7 +11,7 @@ router.get('/customer/nik/:nik', getCustomerController.getOneCustomerByNik);
 router.get('/customer/email/:email', getCustomerController.getOneCustomerByEmail);
 router.get('/customer/name/:name', getCustomerController.getOneCustomerByName);
 router.get('/customer/transaction/:id', getCustomerController.getCustomerByCustomerTransactionId);
-//router.get('/photo/:id', getCustomerController.getPhoto);
+// router.get('/photo/:id', getCustomerController.getPhoto);
 
 // POST
 router.post('/customer', postCustomerController.createCustomer);

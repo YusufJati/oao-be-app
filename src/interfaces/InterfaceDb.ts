@@ -34,6 +34,7 @@ export interface Customer {
   kewarganegaraan?: string;
   tanggal_berlaku?: Date;
   provinsi?: string;
+  kota?: string;
   foto?: Buffer;
   tanda_tangan?: Buffer;
   tanggal_input?: Date;

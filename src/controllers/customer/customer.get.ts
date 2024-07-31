@@ -49,6 +49,7 @@ export const getOneCustomer = async (req: Request, res: Response) => {
           kelurahan: customer.kelurahan,
           kecamatan: customer.kecamatan,
           provinsi: customer.provinsi,
+          kota: customer.kota,
           tanggal_lahir: customer.tanggal_lahir,
           jenis_kelamin: customer.jenis_kelamin,
           golongan_darah: customer.golongan_darah,
@@ -128,6 +129,7 @@ export const getOneCustomerByNik = async (req: Request, res: Response) => {
             kelurahan: customer.kelurahan,
             kecamatan: customer.kecamatan,
             provinsi: customer.provinsi,
+            kota: customer.kota,
             tanggal_lahir: customer.tanggal_lahir,
             jenis_kelamin: customer.jenis_kelamin,
             golongan_darah: customer.golongan_darah,
@@ -208,6 +210,7 @@ export const getOneCustomerByName = async (req: Request, res: Response) => {
             kelurahan: customer.kelurahan,
             kecamatan: customer.kecamatan,
             provinsi: customer.provinsi,
+            kota: customer.kota,
             tanggal_lahir: customer.tanggal_lahir,
             jenis_kelamin: customer.jenis_kelamin,
             golongan_darah: customer.golongan_darah,
@@ -287,6 +290,7 @@ export const getOneCustomerByEmail = async (req: Request, res: Response) => {
             kelurahan: customer.kelurahan,
             kecamatan: customer.kecamatan,
             provinsi: customer.provinsi,
+            kota: customer.kota,
             tanggal_lahir: customer.tanggal_lahir,
             jenis_kelamin: customer.jenis_kelamin,
             golongan_darah: customer.golongan_darah,
@@ -352,6 +356,7 @@ export const getAllCustomers = async (req: Request, res: Response) => {
               kelurahan: customer.kelurahan,
               kecamatan: customer.kecamatan,
               provinsi: customer.provinsi,
+              kota: customer.kota,
               tanggal_lahir: customer.tanggal_lahir,
               jenis_kelamin: customer.jenis_kelamin,
               golongan_darah: customer.golongan_darah,
@@ -475,7 +480,7 @@ export const getCustomerByCustomerTransactionId = async (req: Request, res: Resp
 //             return;
 //         }
 
-//         const base64Photo = customer.foto ? customer.foto.toString('base64') : null;
+//         const base64Photo = customer.tanda_tangan ? customer.tanda_tangan.toString('base64') : null;
 //         console.log('base64Photo:', base64Photo);
 
 //         if (base64Photo) {
@@ -485,8 +490,8 @@ export const getCustomerByCustomerTransactionId = async (req: Request, res: Resp
 //                     message: 'OK',
 //                 },
 //                 data: {
-//                     base64Photo,
-//                     photo: `data:image/png;base64,${base64Photo}`,
+//                     // display image
+//                     image: `<img src="data:image/png;base64,{{ base64Photo }}" alt="Customer Photo">`
 //                 },
 //             });
 //         } else {
