@@ -117,8 +117,9 @@ export const createCustomerEmailBroker = async (req: Request, res: Response) => 
             });
 
             return {
-                customer,
-                customerTransaction,
+                customer: customer.email,
+                //customerTransaction,
+                idBroker: data.id_broker,
                 brokerName: getBrokerName?.nama,
             };
         });
