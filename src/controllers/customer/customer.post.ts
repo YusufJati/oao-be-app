@@ -95,6 +95,7 @@ export const createCustomer = async (req: Request, res: Response) => {
 export const createCustomerEmailBroker = async (req: Request, res: Response) => {
     const data: Customer = req.body;
     const email = req.body.email;
+    const broker_id = req.body.id_broker;
     try
     {
         const result = await prisma.$transaction(async (prisma) => {
@@ -107,7 +108,7 @@ export const createCustomerEmailBroker = async (req: Request, res: Response) => 
                 data: {
                     customer_id: customer.id,
                     email: customer.email,
-                    broker_id: data.id_broker,
+                    broker_id: broker_id,
                 },
             });
             const getBrokerName = await prisma.broker.findFirst({
