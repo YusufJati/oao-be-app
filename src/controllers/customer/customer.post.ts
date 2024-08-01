@@ -95,7 +95,7 @@ export const createCustomer = async (req: Request, res: Response) => {
 export const createCustomerEmailBroker = async (req: Request, res: Response) => {
     const data: Customer = req.body;
     const email = req.body.email;
-    const broker_id = req.body.id_broker;
+    const broker_id = req.body.broker_id;
     try
     {
         const result = await prisma.$transaction(async (prisma) => {
@@ -146,6 +146,7 @@ export const createCustomerEmailBroker = async (req: Request, res: Response) => 
 // Lanjutan dari createCustomerEmailBroker trigger from latest function
 export const createCustomerFullData = async (req: Request, res: Response) => {
     const data: Customer = req.body;
+    const nik = req.body.nik;
     const statusPernikahan = req.body.status_pernikahan;
     
     try 
