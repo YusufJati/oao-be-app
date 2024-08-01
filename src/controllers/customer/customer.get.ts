@@ -461,6 +461,72 @@ export const getCustomerByCustomerTransactionId = async (req: Request, res: Resp
     }
 }
 
+export const getAllCustomersDesktop = async (req: Request, res: Response) => {
+    try {
+        const customers = await prisma.customer.findMany({
+            include: {
+                CustomerTransaction: {
+                    select: {
+                        broker: {
+                            select: {
+                                nama: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+
+        // Transform the result to include only necessary broker information
+        const result = customers.map(customer => {
+            return {
+                id: customer.id,
+                nik: customer.nik,
+                nama: customer.nama,
+                email: customer.email,
+                alamat: customer.alamat,
+                kelurahan: customer.kelurahan,
+                kecamatan: customer.kecamatan,
+                provinsi: customer.provinsi,
+                kota: customer.kota,
+                tempat_lahir: customer.tempat_lahir,
+                tanggal_lahir: customer.tanggal_lahir,
+                jenis_kelamin: customer.jenis_kelamin,
+                golongan_darah: customer.golongan_darah,
+                status_pernikahan: customer.status_pernikahan,
+                rt_rw: customer.rt_rw,
+                agama: customer.agama,
+                pekerjaan: customer.pekerjaan,
+                kewarganegaraan: customer.kewarganegaraan,
+                tanggal_berlaku: customer.tanggal_berlaku,
+                foto: customer.foto,
+                tanda_tangan: customer.tanda_tangan,
+                tanggal_input: customer.tanggal_input,
+                // Concatenate broker names into a single string
+                broker: customer.CustomerTransaction.map(transaction => transaction.broker?.nama).filter(nama => nama).join(", ")
+            };
+        });
+
+        res.status(200).json({
+            meta: {
+                code: 200,
+                message: 'OK',
+            },
+            data: result,
+        });
+    } catch (error) {
+        console.error('Error fetching customers:', error);
+        res.status(500).json({
+            meta: {
+                code: 500,
+                message: 'Error fetching customers',
+            },
+            error: error || 'An unexpected error occurred',
+        });
+    }
+};
+
+
 // get photo data and convert it to image and base64 and display it
 // export const getPhoto = async (req: Request, res: Response): Promise<void> => {
 //     const { id } = req.params;

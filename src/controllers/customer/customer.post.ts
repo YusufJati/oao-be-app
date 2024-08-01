@@ -196,14 +196,14 @@ export const createCustomerFullData = async (req: Request, res: Response) => {
             });
 
             // get foto and tanda_tangan size
-            const fotoBuffer = data.foto ? Buffer.from(data.foto.toString('base64'), 'base64') : undefined;
-            const tandaTanganBuffer = data.tanda_tangan ? Buffer.from(data.tanda_tangan.toString('base64'), 'base64') : undefined;
-            const fotoSize = fotoBuffer ? fotoBuffer.length : 0;
-            const tandaTanganSize = tandaTanganBuffer ? tandaTanganBuffer.length : 0;
-            const fotoSizeInKB = fotoSize / 1024;   
-            const tandaTanganSizeInKB = tandaTanganSize / 1024;
-            const fotoSizeInMB = fotoSizeInKB / 1024;
-            const tandaTanganSizeInMB = tandaTanganSizeInKB / 1024;
+            // const fotoBuffer = data.foto ? Buffer.from(data.foto.toString('base64'), 'base64') : undefined;
+            // const tandaTanganBuffer = data.tanda_tangan ? Buffer.from(data.tanda_tangan.toString('base64'), 'base64') : undefined;
+            // const fotoSize = fotoBuffer ? fotoBuffer.length : 0;
+            // const tandaTanganSize = tandaTanganBuffer ? tandaTanganBuffer.length : 0;
+            // const fotoSizeInKB = fotoSize / 1024;   
+            // const tandaTanganSizeInKB = tandaTanganSize / 1024;
+            // const fotoSizeInMB = fotoSizeInKB / 1024;
+            // const tandaTanganSizeInMB = tandaTanganSizeInKB / 1024;
 
             // Membuat customer_transaction dan menghasilkan OTP
             const otpCode = generateOTP(6);
@@ -217,18 +217,50 @@ export const createCustomerFullData = async (req: Request, res: Response) => {
                 },
             });
 
-            return { updateCustomer, customerTransaction, fotoSizeInKB, tandaTanganSizeInKB, fotoSizeInMB, tandaTanganSizeInMB };
+            return { updateCustomer, customerTransaction };
         });
         res.status(201).json({
             meta: {
                 code: 201,
                 message: 'Created',
             },
-            data: result,
-            size: {
-                foto: `Ukuran foto: ${result.fotoSizeInKB} KB, ${result.fotoSizeInMB} MB`,
-                tanda_tangan: `Ukuran tanda tangan: ${result.tandaTanganSizeInKB} KB, ${result.tandaTanganSizeInMB} MB`,
+            data: {
+                customer: {
+                    id: result.updateCustomer.id,
+                    nik: result.updateCustomer.nik,
+                    nama: result.updateCustomer.nama,
+                    tempat_lahir: result.updateCustomer.tempat_lahir,
+                    tanggal_lahir: result.updateCustomer.tanggal_lahir,
+                    jenis_kelamin: result.updateCustomer.jenis_kelamin,
+                    golongan_darah: result.updateCustomer.golongan_darah,
+                    status_pernikahan: result.updateCustomer.status_pernikahan,
+                    alamat : result.updateCustomer.alamat,
+                    rt_rw: result.updateCustomer.rt_rw,
+                    kelurahan: result.updateCustomer.kelurahan,
+                    kecamatan: result.updateCustomer.kecamatan,
+                    agama: result.updateCustomer.agama,
+                    pekerjaan: result.updateCustomer.pekerjaan,
+                    kewarganegaraan: result.updateCustomer.kewarganegaraan,
+                    tanggal_berlaku: result.updateCustomer.tanggal_berlaku,
+                    provinsi: result.updateCustomer.provinsi,
+                    kota: result.updateCustomer.kota,
+                    tanggal_input: result.updateCustomer.tanggal_input,
+                    email: result.updateCustomer.email,
+                },
+                customerTransaction: {
+                    id: result.customerTransaction.id,
+                    customer_id: result.customerTransaction.customer_id,
+                    email: result.customerTransaction.email,
+                    broker_id: result.customerTransaction.broker_id,
+                    created_at: result.customerTransaction.created_at,
+                    updated_at: result.customerTransaction.updated_at,
+                },
+                kode_otp : result.customerTransaction.kode_otp, 
             },
+            // size: {
+            //     foto: `Ukuran foto: ${result.fotoSizeInKB} KB, ${result.fotoSizeInMB} MB`,
+            //     tanda_tangan: `Ukuran tanda tangan: ${result.tandaTanganSizeInKB} KB, ${result.tandaTanganSizeInMB} MB`,
+            // },
         });
     }catch(error)
     {
