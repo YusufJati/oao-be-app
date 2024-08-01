@@ -357,6 +357,7 @@ export const getAllCustomers = async (req: Request, res: Response) => {
               kecamatan: customer.kecamatan,
               provinsi: customer.provinsi,
               kota: customer.kota,
+              tempat_lahir: customer.tempat_lahir,
               tanggal_lahir: customer.tanggal_lahir,
               jenis_kelamin: customer.jenis_kelamin,
               golongan_darah: customer.golongan_darah,
