@@ -274,3 +274,85 @@ export const createCustomerFullData = async (req: Request, res: Response) => {
         });
     }
 }
+
+export const createCustomer2 = async (req: Request, res: Response) => {
+    const data: Customer = req.body;
+    const statusPernikahan = req.body.status_pernikahan;
+
+    try {
+        // Membuat customer
+        const customer = await prisma.customer.create({
+            data: {
+                nik: data.nik,
+                nama: data.nama,
+                email: data.email,
+                alamat: data.alamat,
+                kelurahan: data.kelurahan,
+                kecamatan: data.kecamatan,
+                provinsi: data.provinsi,
+                kota: data.kota,
+                tanggal_lahir: data.tanggal_lahir,
+                tempat_lahir: data.tempat_lahir,
+                jenis_kelamin: data.jenis_kelamin,
+                golongan_darah: data.golongan_darah,
+                status_pernikahan: statusPernikahan,
+                rt_rw: data.rt_rw,
+                agama: data.agama,
+                kewarganegaraan: data.kewarganegaraan,
+                pekerjaan: data.pekerjaan,
+                tanggal_berlaku: data.tanggal_berlaku,
+                foto: data.foto ? Buffer.from(data.foto.toString('base64'), 'base64') : undefined,
+                tanda_tangan: data.tanda_tangan ? Buffer.from(data.tanda_tangan.toString('base64'), 'base64') : undefined,
+                tanggal_input: data.tanggal_input,
+            },
+        });
+
+        // Menghitung ukuran foto dan tanda tangan
+        const fotoBuffer = data.foto ? Buffer.from(data.foto.toString('base64'), 'base64') : undefined;
+        const tandaTanganBuffer = data.tanda_tangan ? Buffer.from(data.tanda_tangan.toString('base64'), 'base64') : undefined;
+        const fotoSize = fotoBuffer ? fotoBuffer.length : 0;
+        const tandaTanganSize = tandaTanganBuffer ? tandaTanganBuffer.length : 0;
+        const fotoSizeInKB = fotoSize / 1024;
+        const tandaTanganSizeInKB = tandaTanganSize / 1024;
+        const fotoSizeInMB = fotoSizeInKB / 1024;
+        const tandaTanganSizeInMB = tandaTanganSizeInKB / 1024;
+
+        // Membuat customer_transaction dan menghasilkan OTP
+        const otpCode = generateOTP(6);
+        const customerTransaction = await prisma.customerTransaction.create({
+            data: {
+                customer_id: customer.id,
+                email: customer.email,
+                broker_id: data.id_broker,
+                kode_otp: otpCode,
+                created_at: data.tanggal_input,
+                updated_at: data.tanggal_input,
+            },
+        });
+
+        // Mengirim OTP melalui email
+        await sendOTPEmail(data.email, otpCode);
+
+        res.status(201).json({
+            meta: {
+                code: 201,
+                message: 'Created',
+            },
+            data: { customer, customerTransaction },
+            size: {
+                foto: `Ukuran foto: ${fotoSizeInKB} KB, ${fotoSizeInMB} MB`,
+                tanda_tangan: `Ukuran tanda tangan: ${tandaTanganSizeInKB} KB, ${tandaTanganSizeInMB} MB`,
+            },
+        });
+    } catch (error) {
+        console.error('Error creating customer:', error);
+        res.status(500).json({
+            meta: {
+                code: 500,
+                message: 'Error creating customer',
+            },
+            error: error || 'An unexpected error occurred',
+        });
+    }
+}
+

@@ -34,7 +34,7 @@ export const authenticateAPIKey = (req: Request, res: Response, next: NextFuncti
   };
 
 // export const loginAPI = async (req: Request, res: Response) => {
-//   const { username, password } = req.body;
+//   const { username, password } = req.headers;
 
 //   try {
 //     const user = await client.user.findFirst({

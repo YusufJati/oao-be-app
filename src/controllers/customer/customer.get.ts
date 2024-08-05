@@ -499,8 +499,8 @@ export const getAllCustomersDesktop = async (req: Request, res: Response) => {
                 pekerjaan: customer.pekerjaan,
                 kewarganegaraan: customer.kewarganegaraan,
                 tanggal_berlaku: customer.tanggal_berlaku,
-                foto: customer.foto,
-                tanda_tangan: customer.tanda_tangan,
+                foto: customer.foto?.toString('base64'),
+                tanda_tangan: customer.tanda_tangan?.toString('base64'),
                 tanggal_input: customer.tanggal_input,
                 // Concatenate broker names into a single string
                 broker: customer.CustomerTransaction.map(transaction => transaction.broker?.nama).filter(nama => nama).join(", ")
