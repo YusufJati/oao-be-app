@@ -35,6 +35,7 @@ export const createCustomer = async (req: Request, res: Response) => {
                     tanggal_berlaku: data.tanggal_berlaku,
                     foto: data.foto ? Buffer.from(data.foto.toString('base64'), 'base64') : undefined,
                     tanda_tangan: data.tanda_tangan ? Buffer.from(data.tanda_tangan.toString('base64'), 'base64') : undefined,
+                    ktp_capture: data.ktp_capture ? Buffer.from(data.ktp_capture.toString('base64'), 'base64') : undefined,
                     tanggal_input: data.tanggal_input,
                 },
             });
