@@ -1,0 +1,107 @@
+-- public.broker definition
+
+-- Drop table
+
+-- DROP TABLE public.broker;
+
+CREATE TABLE public.broker (
+	id serial4 NOT NULL,
+	kode varchar(255) NULL,
+	nama varchar(255) NULL,
+	alamat varchar(255) NULL,
+	nomor_telepon varchar NULL,
+	contact_person varchar(255) NULL,
+	created_at timestamp NULL,
+	CONSTRAINT broker_pkey PRIMARY KEY (id)
+);
+
+
+-- public.customer definition
+
+-- Drop table
+
+-- DROP TABLE public.customer;
+
+CREATE TABLE public.customer (
+	id serial4 NOT NULL,
+	nik varchar(255) NULL,
+	nama varchar(255) NULL,
+	tempat_lahir varchar(255) NULL,
+	tanggal_lahir date NULL,
+	jenis_kelamin varchar(255) NULL,
+	golongan_darah varchar(255) NULL,
+	kode_negara varchar(255) NULL,
+	status_pernikahan bool NULL,
+	jenis_identitas varchar(255) NULL,
+	alamat varchar(255) NULL,
+	rt_rw varchar(255) NULL,
+	kelurahan varchar(255) NULL,
+	kecamatan varchar(255) NULL,
+	agama varchar(255) NULL,
+	pekerjaan varchar(255) NULL,
+	kewarganegaraan varchar(255) NULL,
+	tanggal_berlaku date NULL,
+	provinsi varchar(255) NULL,
+	foto bytea NULL,
+	tanda_tangan bytea NULL,
+	tanggal_input timestamp NULL,
+	email varchar(255) NULL,
+	CONSTRAINT customer_pkey PRIMARY KEY (id)
+);
+
+
+-- public.customertransaction definition
+
+-- Drop table
+
+-- DROP TABLE public.customertransaction;
+
+CREATE TABLE public.customertransaction (
+	id serial4 NOT NULL,
+	customer_id int8 NULL,
+	broker_id int8 NULL,
+	created_at timestamp NULL,
+	updated_at timestamp NULL,
+	created_by varchar(255) NULL,
+	updated_by varchar(255) NULL,
+	email varchar(255) NULL,
+	kode_otp varchar(255) NULL,
+	CONSTRAINT customertransaction_pkey PRIMARY KEY (id),
+	CONSTRAINT fk_broker FOREIGN KEY (broker_id) REFERENCES public.broker(id),
+	CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES public.customer(id)
+);
+CREATE UNIQUE INDEX index_customer_broker ON customertransaction USING btree (broker_id, customer_id);
+
+
+-- public.openingaccount definition
+
+-- Drop table
+
+-- DROP TABLE public.openingaccount;
+
+CREATE TABLE public.openingaccount (
+	id serial4 NOT NULL,
+	efek_saham varchar(255) NULL,
+	efek_utang varchar(255) NULL,
+	efek_reksa_dana varchar(255) NULL,
+	pendidikan_terakhir varchar(255) NULL,
+	nama_ibu_kandung varchar(255) NULL,
+	nama_perusahaan varchar(255) NULL,
+	alamat_perusahaan varchar(255) NULL,
+	kode_pos int4 NULL,
+	nomor_perusahaan int8 NULL,
+	jenis_pekerjaan varchar(255) NULL,
+	email_perusahaan varchar(255) NULL,
+	jabatan varchar(255) NULL,
+	bidang_usaha varchar(255) NULL,
+	lama_bekerja varchar(255) NULL,
+	penghasilan_pertahun varchar(255) NULL,
+	penghasilan_tambahan_pertahun varchar(255) NULL,
+	sumber_penghasilan_utama varchar(255) NULL,
+	sumber_penghasilan_tambahan _varchar NULL,
+	sumber_pendanaan_transaksi varchar(255) NULL,
+	tujuan_investasi _varchar NULL,
+	tanda_tangan bytea NULL,
+	CONSTRAINT openingaccount_pkey PRIMARY KEY (id),
+	CONSTRAINT fk_customer_transaction FOREIGN KEY (id) REFERENCES public.customertransaction(id)
+);
