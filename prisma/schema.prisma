@@ -48,6 +48,7 @@ model Customer {
   kota               String?  @db.VarChar(255)
   foto               Bytes?
   tanda_tangan       Bytes?
+  ktp_capture        Bytes?
   tanggal_input      DateTime?
   email              String?  @db.VarChar(255) 
   CustomerTransaction CustomerTransaction[]

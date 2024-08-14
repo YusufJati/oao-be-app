@@ -37,6 +37,7 @@ export interface Customer {
   kota?: string;
   foto?: Buffer;
   tanda_tangan?: Buffer;
+  ktp_capture?: Buffer;
   tanggal_input?: Date;
   email: string;
   id_broker?: number;

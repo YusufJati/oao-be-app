@@ -222,6 +222,7 @@ export const getOneCustomerByName = async (req: Request, res: Response) => {
             tanggal_berlaku: customer.tanggal_berlaku,
             foto: customer.foto ? customer.foto.toString('base64') : null,
             tanda_tangan: customer.tanda_tangan ? customer.tanda_tangan.toString('base64') : null,
+            kt_capture: customer.ktp_capture ? customer.ktp_capture.toString('base64') : null,
             tanggal_input: customer.tanggal_input,
             broker: customer.CustomerTransaction.map(transaction => transaction.broker)
         };
@@ -302,6 +303,7 @@ export const getOneCustomerByEmail = async (req: Request, res: Response) => {
             tanggal_berlaku: customer.tanggal_berlaku,
             foto: customer.foto ? customer.foto.toString('base64') : null,
             tanda_tangan: customer.tanda_tangan ? customer.tanda_tangan.toString('base64') : null,
+            kt_capture: customer.ktp_capture ? customer.ktp_capture.toString('base64') : null,
             tanggal_input: customer.tanggal_input,
             broker: customer.CustomerTransaction.map(transaction => transaction.broker)
         };
@@ -369,6 +371,7 @@ export const getAllCustomers = async (req: Request, res: Response) => {
               tanggal_berlaku: customer.tanggal_berlaku,
               foto: customer.foto,
               tanda_tangan: customer.tanda_tangan,
+              ktp_capture: customer.ktp_capture,
               tanggal_input: customer.tanggal_input,
               broker: customer.CustomerTransaction.map(transaction => transaction.broker)
           };
@@ -501,6 +504,7 @@ export const getAllCustomersDesktop = async (req: Request, res: Response) => {
                 tanggal_berlaku: customer.tanggal_berlaku,
                 foto: customer.foto?.toString('base64'),
                 tanda_tangan: customer.tanda_tangan?.toString('base64'),
+                ktp_capture: customer.ktp_capture?.toString('base64'),
                 tanggal_input: customer.tanggal_input,
                 // Concatenate broker names into a single string
                 broker: customer.CustomerTransaction.map(transaction => transaction.broker?.nama).filter(nama => nama).join(", ")
