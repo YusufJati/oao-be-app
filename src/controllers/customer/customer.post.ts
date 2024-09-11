@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { Customer } from '../../interfaces/InterfaceDb';
 import { generateAndSendOTP, generateOTP, sendOTPEmail } from '../otp/otp.controller'; // Pastikan jalur impor sesuai dengan lokasi fungsi
+import { resourceUsage } from 'process';
 
 const prisma = new PrismaClient();
 
@@ -164,9 +165,22 @@ export const createCustomerFullData = async (req: Request, res: Response) => {
         // Get customer transaction id
         const customerTransaction = await prisma.customerTransaction.findFirst({
             where: { customer_id: customer_id },
-            select: { id: true },
+            select: { id: true, email: true },
         });
+
         const customerTransactionId = customerTransaction?.id;
+        const customerTransactionEmail  = customerTransaction?.email;
+
+        if (!customerTransactionEmail) {
+            return res.status(400).json({
+                meta: {
+                    code: 400,
+                    message: 'Customer email not found',
+                }
+            });
+        }
+
+        console.log(customerTransactionEmail)
 
         const result = await prisma.$transaction(async (prisma) => {
             // Update customer with full data
@@ -219,8 +233,19 @@ export const createCustomerFullData = async (req: Request, res: Response) => {
                 },
             });
 
-            return { updateCustomer, customerTransaction };
+
+         return { updateCustomer, customerTransaction, otpCode };
+            
         });
+
+        sendOTPEmail(customerTransactionEmail, result.otpCode)
+        .then(() => {
+            console.log(`OTP email successfully sent to ${customerTransactionEmail}`);
+        })
+        .catch((emailError) => {
+            console.error('Error sending OTP email:', emailError);
+        });
+
         res.status(201).json({
             meta: {
                 code: 201,
